@@ -1,0 +1,17 @@
+[
+    {
+        "type": "URI",
+        "name": "GrandSoft Exploit Kit",
+        "regexp": "\/^http(s|):\\\/\\\/.+.xyz\\\/getversionpd\\\/.+\\\/.+\\\/.+\\\/.+(\\\/|)$\/"
+    },
+    {
+        "type": "URI",
+        "name": "GrandSoft Exploit Kit",
+        "regexp": "\/^http(s|):\\\/\\\/.+.xyz\\\/2\\\/[0-9]{4}(\\\/|)$\/"
+    },
+    {
+        "type": "Location",
+        "name": "Redirection RIG Exploit Kit",
+        "regexp": "\/\\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}\/"
+    }
+]
