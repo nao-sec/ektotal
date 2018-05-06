@@ -139,8 +139,8 @@ class submit
 
             // parse response data
             $response = [];
-            $response_first_line = explode(' ', $headers[0]);
-            if (count($response_first_line) >= 2) {
+            if (isset($headers[0]) && count(explode(' ', $headers[0])) >= 2) {
+                $response_first_line = explode(' ', $headers[0]);
                 $response['HTTP'] = $response_first_line[0];
                 $response['Status'] = $response_first_line[1];
                 for ($j = 1; $j < count($headers); $j++) {
