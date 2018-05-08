@@ -7,7 +7,7 @@
     {
         "type": "URI",
         "name": "GrandSoft Exploit Kit",
-        "regexp": "\/^http(s|):\\\/\\\/.+.xyz\\\/2\\\/[0-9]{4}(\\\/|)$\/"
+        "regexp": "\/^http(s|):\\\/\\\/.+.xyz\\\/[0-9]{1}\\\/[0-9]{4}(\\\/|)$\/"
     },
     {
         "type": "Location",
