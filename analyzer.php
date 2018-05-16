@@ -97,6 +97,8 @@ class Analyzer
         for ($i = 0; $i < count($code); $i++) {
             if (strpos($code[$i], 'GogoGoA') !== false && strpos($code[$i], 'LikeMeLike') !== false && strpos($code[$i], 'ProtectMe') !== false) {
                 $code[$i] = 'CVE-2016-0189';
+            } else if (strpos($code[$i], 'k1 = 1') !== false && strpos($code[$i], 'k2 = 1999 + k1') !== false && strpos($code[$i], 'fix1 = "%u4141"') !== false && strpos($code[$i], 'fix22 = "%u0000"') !== false) {
+                $code[$i] = 'CVE-2016-0189';
             } else if (strpos($code[$i], 'fr=String.fromCharCode') !== false && strpos($code[$i], '<object type="application/x-shockwave-flash"') !== false) {
                 // $code[$i] = 'SWF Exploit';
                 unset($code[$i]);
