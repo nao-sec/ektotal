@@ -162,12 +162,12 @@ class submit
                             if (preg_match('/^[0-9a-f]{1,}$/', $body_parts[0])) {
                                 $chunked_data_size = hexdec($body_parts[0]);
                                 $chunked_data = implode("\r\n", array_slice($body_parts, 1));
-                                $original_data[] = gzdecode(substr($chunked_data, 0, $chunked_data_size));
+                                $original_data[] = substr($chunked_data, 0, $chunked_data_size);
 
                                 $other_data = substr($chunked_data, $chunked_data_size);
                                 $other_data = explode("\r\n", $other_data);
                                 for ($j = 0; $j < count($other_data); $j++) {
-                                    if (strlen($other_data[$j]) === 0 || $other_data[$j] === '0' || $other_data[$j] === '00' || $other_data[$j] === "\r\n") {
+                                    if (strlen($other_data[$j]) === 0 || $other_data[$j] === '0' || $other_data[$j] === "\r\n") {
                                         unset($other_data[$j]);
                                     } else {
                                         break;
@@ -182,7 +182,7 @@ class submit
                             $pre_data_size = strlen($body);
                         }
 
-                        $body = implode('', $original_data);
+                        $body = gzdecode($original_data);
                     } else {
                         $body = gzdecode($body);
                     }
