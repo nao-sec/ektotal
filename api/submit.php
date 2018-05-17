@@ -182,7 +182,7 @@ class submit
                             $pre_data_size = strlen($body);
                         }
 
-                        $body = gzdecode($original_data);
+                        $body = gzdecode(implode('', $original_data));
                     } else {
                         $body = gzdecode($body);
                     }
