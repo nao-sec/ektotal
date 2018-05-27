@@ -2,12 +2,12 @@
     {
         "type": "URI",
         "name": "GrandSoft Exploit Kit",
-        "regexp": "\/^http(s|):\\\/\\\/.+.xyz\\\/getversionpd\\\/.+\\\/.+\\\/.+\\\/.+(\\\/|)$\/"
+        "regexp": "\/^http(s|):\\\/\\\/.+.[xyz|tk]\\\/getversionpd\\\/.+\\\/.+\\\/.+\\\/.+(\\\/|)$\/"
     },
     {
         "type": "URI",
         "name": "GrandSoft Exploit Kit",
-        "regexp": "\/^http(s|):\\\/\\\/.+.xyz\\\/[0-9]{1}\\\/[0-9]{4}(\\\/|)$\/"
+        "regexp": "\/^http(s|):\\\/\\\/.+.[xyz|tk]\\\/[0-9]{1}\\\/[0-9]{4}(\\\/|)$\/"
     },
     {
         "type": "Location",
