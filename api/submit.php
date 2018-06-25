@@ -362,7 +362,7 @@ class submit
                 if ($rule['type'] === 'URI') {
                     if (preg_match($rule['regexp'], $url)) {
                         // if RIG -> analyze
-                        if ($rule['name'] === 'RIG Exploit Kit') {
+                        if (strpos($$rule['name'], 'RIG') !== false) {
                             $rig_analysis_result = Analyzer::rig($response_body, $content_type);
 
                             // landing
@@ -401,7 +401,7 @@ class submit
                             }
                         }
 
-                        if ($rule['name'] === 'GrandSoft Exploit Kit') {
+                        if (strpos($rule['name'], 'GrandSoft') !== false) {
                             if (strpos($content_type, 'text/html') !== false) {
                                 if (strpos($response_body, 'document.write("<iframe src=\'"+srcOfScript+"\'></iframe>")') !== false) {
                                     // Redirector
@@ -455,7 +455,7 @@ class submit
                             }
                         }
 
-                        if ($rule['name'] === 'Magnitude Exploit Kit') {
+                        if (strpos($rule['name'], 'Magnitude') !== false) {
                             $is_magnitude = true;
                         }
 
@@ -469,7 +469,7 @@ class submit
                     }
                 } else if ($rule['type'] === 'SourceCode') {
                     if (preg_match($rule['regexp'], $response_body)) {
-                        if ($rule['name'] === 'GrandSoft Exploit Kit') {
+                        if (strpos($rule['name'], 'GrandSoft') !== false) {
                             if (strpos($content_type, 'text/html') !== false) {
                                 if (strpos($response_body, 'document.write("<iframe src=\'"+srcOfScript+"\'></iframe>")') !== false) {
                                     // Redirector
