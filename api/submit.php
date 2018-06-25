@@ -362,7 +362,7 @@ class submit
                 if ($rule['type'] === 'URI') {
                     if (preg_match($rule['regexp'], $url)) {
                         // if RIG -> analyze
-                        if (strpos($$rule['name'], 'RIG') !== false) {
+                        if (strpos($rule['name'], 'RIG') !== false) {
                             $rig_analysis_result = Analyzer::rig($response_body, $content_type);
 
                             // landing
