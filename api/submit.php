@@ -410,6 +410,10 @@ class submit
                                     // CVE-2016-0189
                                     $rule['name'] = $rule['name'] . ' (Landing Page)';
                                     $description['cve_numbers'] = ['CVE-2016-0189'];
+                                } else if (strpos($response_body, 'Class_Terminate()') !== false) {
+                                    // CVE-2018-8174
+                                    $rule['name'] = $rule['name'] . ' (Landing Page)';
+                                    $description['cve_numbers'] = ['CVE-2018-8174'];
                                 }
                             } else if (strpos($content_type, 'application/octet-stream') !== false) {
                                 // analyze malware
@@ -478,6 +482,10 @@ class submit
                                     // CVE-2016-0189
                                     $rule['name'] = $rule['name'] . ' (Landing Page)';
                                     $description['cve_numbers'] = ['CVE-2016-0189'];
+                                } else if (strpos($response_body, 'Class_Terminate()') !== false) {
+                                    // CVE-2018-8174
+                                    $rule['name'] = $rule['name'] . ' (Landing Page)';
+                                    $description['cve_numbers'] = ['CVE-2018-8174'];
                                 }
                             } else if (strpos($content_type, 'application/octet-stream') !== false) {
                                 // analyze malware
