@@ -1,13 +1,13 @@
 version: '3'
 services:
   app:
-    build: .
+    build: . 
     restart: always
     volumes:
       - ./logs:/var/www/html/logs:rw
       - ./malware:/var/www/html/malware:rw
       - ./swf:/var/www/html/swf:rw
-      - ./uploads:/var/www/html/uploads:rw
+      - ./uploads:/var/www/html/api/uploads:rw
       - ./api/result:/var/www/html/api/result:rw
     networks:
       - ektotal
