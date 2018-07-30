@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    build: .
+    restart: always
+    volumes:
+      - ./logs:/var/www/html/logs:rw
+      - ./malware:/var/www/html/malware:rw
+      - ./swf:/var/www/html/swf:rw
+      - ./uploads:/var/www/html/uploads:rw
+      - ./api/result:/var/www/html/api/result:rw
+    networks:
+      - ektotal
+  
+  nginx:
+    image: nginx:alpine
+    restart: always
+    volumes:
+      - ./:/usr/share/nginx/html:ro
+      - ./api/result:/usr/share/nginx/result:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ektotal.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "80:80"
+    networks:
+      - ektotal
+networks:
+  ektotal:
