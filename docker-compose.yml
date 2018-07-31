@@ -7,7 +7,7 @@ services:
       - ./logs:/var/www/html/logs:rw
       - ./malware:/var/www/html/malware:rw
       - ./swf:/var/www/html/swf:rw
-      - ./uploads:/var/www/html/api/uploads:rw
+      - ./uploads:/var/www/html/uploads:rw
       - ./api/result:/var/www/html/api/result:rw
     networks:
       - ektotal
