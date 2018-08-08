@@ -10,4 +10,9 @@ RUN apk add --no-cache mono --repository http://dl-cdn.alpinelinux.org/alpine/ed
     apk del .build-dependencies && \
     docker-php-ext-install zip && \
     chown www-data:www-data -R /var/www/html && \
-    rm -rf /var/www/html/{logs,uploads,swf,malware}/* /var/www/html/api/result/*
+    rm -rf /var/www/html/{logs,uploads,swf,malware}/* /var/www/html/api/result/* && \
+    echo "file_uploads = On" > /usr/local/etc/php/conf.d/ektotal.ini && \
+    echo "memory_limit = 64M" >> /usr/local/etc/php/conf.d/ektotal.ini && \
+    echo "upload_max_filesize = 64M" >> /usr/local/etc/php/conf.d/ektotal.ini && \
+    echo "post_max_size = 64M" >> /usr/local/etc/php/conf.d/ektotal.ini && \
+    echo "max_execution_time = 600" >> /usr/local/etc/php/conf.d/ektotal.ini
