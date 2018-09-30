@@ -28,7 +28,7 @@
                     <b-row class="thanks">
                         <b-col>
                             <h2>SpecialThanks</h2>
-                            <p><strong>@EKFiddle</strong> We appreciate this great tool!</p>
+                            <p><strong><a href="https://github.com/malwareinfosec/EKFiddle">@EKFiddle</a></strong> We appreciate this great tool!</p>
                         </b-col>
                     </b-row>
                 </b-container>

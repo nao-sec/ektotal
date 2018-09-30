@@ -16,9 +16,17 @@
 - Environment that can run .NET binaries (e.g. `.NET Framework`, `Mono`)
 
 ## Installation
+### Docker
 1. Git clone this repository
 2. Git clone [hidd3ncod3s/pcap2saz](https://github.com/hidd3ncod3s/pcap2saz) and build it
-3. Put `FiddlerCore.dll`, `Ionic.Zip.dll` and `pcap2saz.exe` under `/ektotal/bin`
+3. Put `FiddlerCore.dll`, `Ionic.Zip.dll` and `pcap2saz.exe` under `ektotal/bin`
+4. If you want to submit malwares to VirusTotal, set the API key to `post_vt.php`
+5. Run `docker-compose up -d`
+
+### Build
+1. Git clone this repository
+2. Git clone [hidd3ncod3s/pcap2saz](https://github.com/hidd3ncod3s/pcap2saz) and build it
+3. Put `FiddlerCore.dll`, `Ionic.Zip.dll` and `pcap2saz.exe` under `ektotal/bin`
 4. If you want to submit malwares to VirusTotal, set the API key to `post_vt.php`
 5. Configure & run Web Server  
    document_root is `/frontend/dist` and document_root of the URL containing `/api` is `/`  
