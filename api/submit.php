@@ -184,10 +184,18 @@ class submit
 
                         $body = gzdecode(implode('', $original_data));
                     } else {
-                        $body_size = $response['header']['Content-Length'];
-                        if (strlen($body) === $body_size) {
-                            try
-                            {
+                        if (isset($response['header']['Content-Length'])) {
+                            $body_size = $response['header']['Content-Length'];
+                            if (strlen($body) === $body_size) {
+                                try
+                                {
+                                    $body = gzdecode($body);
+                                } catch (Exception $e) {
+                                    $body = '';
+                                }
+                            }
+                        } else {
+                            try {
                                 $body = gzdecode($body);
                             } catch (Exception $e) {
                                 $body = '';
