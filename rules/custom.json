@@ -13,5 +13,10 @@
         "type": "Location",
         "name": "Redirection RIG Exploit Kit",
         "regexp": "\/\\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}\/"
+    },
+    {
+        "type": "SourceCode",
+        "name": "Fallout EK",
+        "regexp": "\/window\\.screen\\.width<=1024&&window\\.screen\\.height<=768&&Array\/"
     }
 ]
