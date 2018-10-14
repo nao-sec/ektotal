@@ -556,6 +556,39 @@ class submit
                             'description' => $description,
                         ];
                         break;
+
+                        if (strpos($rule['name'], 'Fallout') !== false) {
+                            $fallout_analysis_result = Analyzer::fallout($response_body, $content_type);
+
+                            // landing
+                            if ($fallout_analysis_result['type'] === 'landing') {
+                                $host = $fallout_analysis_result['host'];
+                                $host_regexp = '/' . str_replace('.', '\\.', $host) . '/';
+                                $rules[] = ['type' => 'URI', 'name' => 'FalloutEK', 'regexp' => $host_regexp];
+
+                                $description['enc_key'] = $fallout_analysis_result['enc_key'];
+                                $description['cve_numbers'] = $fallout_analysis_result['cve_numbers'];
+                            }
+
+                            // malware
+                            if ($fallout_analysis_result['type'] === 'malware') {
+                                $rule['name'] .= ' (Malware Payload)';
+
+                                // search enc_key
+                                $enc_key = '';
+                                for ($j = $i - 1; $j >= 0; $j--) {
+                                    if (isset($traffics[$j]['result']) && strpos($traffics[$j]['result']['name'], 'Landing Page')) {
+                                        if (isset($traffics[$j]['result']['description']['enc_key'])) {
+                                            $enc_key = $traffics[$j]['result']['description']['enc_key'];
+                                        }
+                                    }
+                                }
+
+                                // decode malware & post vt
+                                $description['sha256'] = Analyzer::get_fallout_malware_info($response_body, $enc_key, $id);
+                                $description['virustotal'] = 'https://www.virustotal.com/#/file/' . $description['sha256'];
+                            }
+                        }
                     }
                 } else if ($rule['type'] === 'Location') {
                     if (preg_match($rule['regexp'], $location_header)) {
