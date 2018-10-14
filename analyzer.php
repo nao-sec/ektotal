@@ -57,6 +57,198 @@ class Analyzer
         //
     }
 
+    public static function fallout($response_body, string $content_type): array
+    {
+        if (strpos($content_type, 'text/html') !== false) {
+            $fallout_info = self::get_fallout_landing_page_info($response_body);
+            $enc_key = $fallout_info['enc_key'];
+            $cve_numbers = $fallout_info['cve_numbers'];
+            return [
+                'type' => 'landing',
+                'enc_key' => $enc_key,
+                'cve_numbers' => $cve_numbers,
+            ];
+        } else if (strpos($content_type, 'application/octet-stream') !== false) {
+            return [
+                'type' => 'malware',
+            ];
+        } else {
+            return [
+                'type' => 'undefined',
+            ];
+        }
+    }
+
+    private static function get_fallout_landing_page_info(string $html): array
+    {
+        if (strlen($html) === 0) {
+            return ['host' => '', 'enc_key' => null, 'cve_numbers' => []];
+        }
+
+        $enc_element = explode("getElementById('", $html)[1];
+        $enc_element = explode("'", $enc_element)[0];
+        $enc_str = explode($enc_element . '">', $html)[1];
+        $enc_str = explode('</', $enc_str)[0];
+
+        $base_str = '';
+        preg_match("/='[a-zA-Z0-9\/\+=]{65}';/", $html, $m);
+        if (count($m) > 0) {
+            $base_str = $m[0];
+            $base_str = explode("'", $base_str)[1];
+        }
+
+        $key = '';
+        preg_match("/='[a-zA-Z]{4,16}';/", $html, $m);
+        if (count($m) > 0) {
+            $key = $m[0];
+            $key = explode("'", $key)[1];
+        }
+
+        $exploit_code = self::fallout_landing_decode($enc_str, $base_str, $key);
+
+        if (strpos($exploit_code, 'Class_Terminate') !== false && strpos($exploit_code, 'msvcrt.dll') !== false) {
+            $shellcode = explode('&Unescape("', $exploit_code)[1];
+            $shellcode = explode('"', $shellcode)[0];
+            $shellcode = explode('%u', $shellcode);
+            $tmp = [];
+            foreach ($shellcode as $s) {
+                $a = substr($s, 0, 2);
+                $b = substr($s, 2, 2);
+
+                $a = chr(hexdec($a));
+                $b = chr(hexdec($b));
+
+                $tmp[] = $b;
+                $tmp[] = $a;
+
+            }
+            $shellcode_key = $tmp[15];
+            $tmp = implode('', $tmp);
+
+            $decoded_shellcode = [];
+            for ($i = 0; $i < strlen($tmp); $i++) {
+                $decoded_shellcode[$i] = chr(ord($tmp[$i]) ^ 0x4F);
+            }
+            $decoded_shellcode = implode('', $decoded_shellcode);
+            $decoded_shellcode = substr($decoded_shellcode, 0, strlen($decoded_shellcode) - 7);
+            $decoded_shellcode = explode(';', $decoded_shellcode);
+
+            $key = $decoded_shellcode[count($decoded_shellcode) - 2];
+            $url = $decoded_shellcode[count($decoded_shellcode) - 1];
+            $host = parse_url($url, PHP_URL_HOST);
+
+            return ['host' => $host, 'enc_key' => $key, 'cve_numbers' => ['CVE-2018-8174']];
+        }
+
+        return ['host' => '', 'enc_key' => null, 'cve_numbers' => []];
+    }
+
+    public static function fallout_step3(string $enc_str, string $key)
+    {
+        $tmp = null;
+        $arr = [];
+        $num = 0;
+        $str = '';
+
+        for ($i = 0; $i < 256; $i++) {
+            $arr[$i] = $i;
+        }
+
+        for ($i = 0; $i < 256; $i++) {
+            $num = ($num + $arr[$i] + ord($key[$i % strlen($key)])) % 256;
+            $tmp = $arr[$i];
+            $arr[$i] = $arr[$num];
+            $arr[$num] = $tmp;
+        }
+
+        $i = 0;
+        $num = 0;
+
+        for ($j = 0; $j < strlen($enc_str); $j++) {
+            $num = ($num + $arr[($i + 1) % 256]) % 256;
+            $i = ($i + 1) % 256;
+            $tmp = $arr[$i];
+            $arr[$i] = $arr[$num];
+            $arr[$num] = $tmp;
+            $str .= chr(ord($enc_str[$j]) ^ $arr[($arr[$i] + $arr[$num]) % 256]);
+        }
+
+        return $str;
+    }
+
+    public static function fallout_step2(string $enc_str)
+    {
+        $str = '';
+        $j = 0;
+        $k = 0;
+        $l = 0;
+
+        for ($i = 0; $i < strlen($enc_str);) {
+            if (($j = ord($enc_str[$i])) < 128) {
+                $str .= chr($j);
+                $i++;
+            } else if ($j > 191 && $j < 224) {
+                $l = ord($enc_str[$i + 1]);
+                $str .= chr((31 & $j) << 6 | 63 & $l);
+                $i += 2;
+            } else {
+                $l = ord($enc_str[$i + 1]);
+                $m = ord($enc_str[$i + 2]);
+                $str .= chr((15 & $j) << 12 | (63 & $l) << 6 | 63 & $m);
+                $i += 3;
+            }
+        }
+
+        return $str;
+    }
+
+    public static function fallout_step1(string $enc_str, string $key)
+    {
+        $i = '';
+        $j = '';
+        $k = '';
+        $l = '';
+        $m = '';
+        $n = '';
+        $o = '';
+        $p = 0;
+        $enc_str = preg_replace("[^A-Za-z0-9\+\/\=]", "", $enc_str);
+
+        for (; $p < strlen($enc_str);) {
+            $i = strpos($key, $enc_str[$p++]) << 2 | ($l = strpos($key, $enc_str[$p++])) >> 4;
+            $j = (15 & $l) << 4 | ($m = strpos($key, $enc_str[$p++])) >> 2;
+            $k = (3 & $m) << 6 | ($n = strpos($key, $enc_str[$p++]));
+            $o .= chr($i);
+            64 != $m && ($o .= chr($j));
+            64 != $n && ($o .= chr($k));
+        }
+
+        return self::fallout_step2($o);
+    }
+
+    public static function fallout_landing_decode(string $enc_str, string $base_str, string $key)
+    {
+        return self::fallout_step3(self::fallout_step1($enc_str, $base_str), $key);
+    }
+
+    public static function get_fallout_malware_info($enc_malware, string $enc_key, string $id): string
+    {
+        $malware = '';
+        for ($i = 0; $i < strlen($enc_malware); $i++) {
+            $malware .= chr(ord($enc_malware[$i]) ^ ord($enc_key[$i % strlen($enc_key)]));
+        }
+
+        $sha256 = hash('sha256', $malware);
+        if (!file_exists(getcwd() . '/malware')) {
+            mkdir(getcwd() . '/malware');
+        }
+        $malware_file_path = getcwd() . '/malware/' . $sha256 . '.bin';
+        file_put_contents($malware_file_path, $malware);
+        self::post_vt($malware_file_path, $id);
+
+        return $sha256;
+    }
+
     private static function get_rig_landing_page_info(string $html): array
     {
         if (strlen($html) === 0) {
