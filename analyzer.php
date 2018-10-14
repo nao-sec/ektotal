@@ -236,8 +236,10 @@ class Analyzer
     public static function get_fallout_malware_info($enc_malware, string $enc_key, string $id): string
     {
         $malware = '';
-        for ($i = 0; $i < strlen($enc_malware); $i++) {
-            $malware .= chr(ord($enc_malware[$i]) ^ ord($enc_key[$i % strlen($enc_key)]));
+        if (strlen($enc_malware) > 0) {
+            for ($i = 0; $i < strlen($enc_malware); $i++) {
+                $malware .= chr(ord($enc_malware[$i]) ^ ord($enc_key[$i % strlen($enc_key)]));
+            }
         }
 
         $sha256 = hash('sha256', $malware);
