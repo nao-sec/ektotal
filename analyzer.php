@@ -61,10 +61,12 @@ class Analyzer
     {
         if (strpos($content_type, 'text/html') !== false) {
             $fallout_info = self::get_fallout_landing_page_info($response_body);
+            $host = $fallout_info['host'];
             $enc_key = $fallout_info['enc_key'];
             $cve_numbers = $fallout_info['cve_numbers'];
             return [
                 'type' => 'landing',
+                'host' => $host,
                 'enc_key' => $enc_key,
                 'cve_numbers' => $cve_numbers,
             ];
