@@ -549,14 +549,6 @@ class submit
                             }
                         }
 
-                        // add result
-                        $traffics[$i]['result'] = [
-                            'name' => $rule['name'],
-                            'url' => $url,
-                            'description' => $description,
-                        ];
-                        break;
-
                         if (strpos($rule['name'], 'Fallout') !== false) {
                             $fallout_analysis_result = Analyzer::fallout($response_body, $content_type);
 
@@ -589,6 +581,14 @@ class submit
                                 $description['virustotal'] = 'https://www.virustotal.com/#/file/' . $description['sha256'];
                             }
                         }
+
+                        // add result
+                        $traffics[$i]['result'] = [
+                            'name' => $rule['name'],
+                            'url' => $url,
+                            'description' => $description,
+                        ];
+                        break;
                     }
                 } else if ($rule['type'] === 'Location') {
                     if (preg_match($rule['regexp'], $location_header)) {
