@@ -503,9 +503,11 @@ class submit
                                     }
                                 }
 
-                                // decode malware & post vt
-                                $description['sha256'] = Analyzer::get_fallout_malware_info($response_body, $enc_key, $id);
-                                $descriptKion['virustotal'] = 'https://www.virustotal.com/#/file/' . $description['sha256'];
+                                if (strpos($response_body) > 0) {
+                                    // decode malware & post vt
+                                    $description['sha256'] = Analyzer::get_fallout_malware_info($response_body, $enc_key, $id);
+                                    $descriptKion['virustotal'] = 'https://www.virustotal.com/#/file/' . $description['sha256'];
+                                }
                             }
                         }
 
