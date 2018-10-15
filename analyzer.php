@@ -270,8 +270,8 @@ class Analyzer
         $code = array_values($code);
 
         for ($i = 0; $i < count($code); $i++) {
-            $code[$i] = explode('var s = ', $code[$i])[1];
-            $code[$i] = explode('";', $code[$i])[1];
+            $code[$i] = explode('var s = "', $code[$i])[1];
+            $code[$i] = explode('";', $code[$i])[0];
             $code[$i] = str_replace('"+"', '', $code[$i]);
             $code[$i] = base64_decode($code[$i]);
         }
