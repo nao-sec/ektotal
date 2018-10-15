@@ -271,7 +271,8 @@ class Analyzer
 
         for ($i = 0; $i < count($code); $i++) {
             $code[$i] = explode('var s = ', $code[$i])[1];
-            $code[$i] = explode('"', $code[$i])[1];
+            $code[$i] = explode('";', $code[$i])[1];
+            $code[$i] = str_replace('"+"', '', $code[$i]);
             $code[$i] = base64_decode($code[$i]);
         }
 
@@ -303,7 +304,7 @@ class Analyzer
                 $code[$i] = 'CVE-2013-2551';
             } else if (strpos($code[$i], '1.123456789012345678901234567890') !== false) {
                 $code[$i] = 'CVE-2014-6332';
-            } else if (strpos($code[$i], 'Class_Terminate') !== false || strpos($code[$i], 'Dim rezult') !== false) {
+            } else if (strpos($code[$i], 'Class_Terminate') !== false) {
                 $code[$i] = 'CVE-2018-8174';
             } else {
                 $code[$i] = 'Unknown Exploit';
