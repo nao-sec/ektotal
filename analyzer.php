@@ -129,7 +129,7 @@ class Analyzer
 
             $decoded_shellcode = [];
             for ($i = 0; $i < strlen($tmp); $i++) {
-                $decoded_shellcode[$i] = chr(ord($tmp[$i]) ^ chr($shellcode_key));
+                $decoded_shellcode[$i] = chr(ord($tmp[$i]) ^ 0x4F);
             }
             $decoded_shellcode = implode('', $decoded_shellcode);
             $decoded_shellcode = substr($decoded_shellcode, 0, strlen($decoded_shellcode) - 7);
