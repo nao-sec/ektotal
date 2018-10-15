@@ -303,7 +303,7 @@ class Analyzer
                 $code[$i] = 'CVE-2013-2551';
             } else if (strpos($code[$i], '1.123456789012345678901234567890') !== false) {
                 $code[$i] = 'CVE-2014-6332';
-            } else if (strpos($code[$i], 'Class_Terminate()') !== false) {
+            } else if (strpos($code[$i], 'Class_Terminate') !== false) {
                 $code[$i] = 'CVE-2018-8174';
             } else {
                 $code[$i] = 'Unknown Exploit';
