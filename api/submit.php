@@ -481,6 +481,8 @@ class submit
 
                             // landing
                             if ($fallout_analysis_result['type'] === 'landing') {
+                                $rule['name'] .= ' (Landing Page)';
+
                                 $host = $fallout_analysis_result['host'];
                                 $host_regexp = '/' . str_replace('.', '\\.', $host) . '/';
                                 $rules[] = ['type' => 'URI', 'name' => 'FalloutEK', 'regexp' => $host_regexp];
@@ -556,6 +558,8 @@ class submit
 
                             // landing
                             if ($fallout_analysis_result['type'] === 'landing') {
+                                $rule['name'] .= ' (Landing Page)';
+                                
                                 $host = $fallout_analysis_result['host'];
                                 $host_regexp = '/' . str_replace('.', '\\.', $host) . '/';
                                 $rules[] = ['type' => 'URI', 'name' => 'FalloutEK', 'regexp' => $host_regexp];
