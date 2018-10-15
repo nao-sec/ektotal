@@ -124,8 +124,8 @@ class Analyzer
                 $tmp[] = $a;
 
             }
-            $shellcode_key = $tmp[15];
             $tmp = implode('', $tmp);
+            $shellcode_key = ord($tmp[0xf]);
 
             $decoded_shellcode = [];
             for ($i = 0; $i < strlen($tmp); $i++) {
