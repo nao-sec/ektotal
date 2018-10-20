@@ -484,8 +484,10 @@ class submit
                                 $rule['name'] .= ' (Landing Page)';
 
                                 $host = $fallout_analysis_result['host'];
-                                $host_regexp = '/' . str_replace('.', '\\.', $host) . '/';
-                                $rules[] = ['type' => 'URI', 'name' => 'FalloutEK', 'regexp' => $host_regexp];
+                                if ($host !== null && strlen($host) > 0) {
+                                    $host_regexp = '/' . str_replace('.', '\\.', $host) . '/';
+                                    $rules[] = ['type' => 'URI', 'name' => 'FalloutEK', 'regexp' => $host_regexp];
+                                }
 
                                 $description['enc_key'] = $fallout_analysis_result['enc_key'];
                                 $description['cve_numbers'] = $fallout_analysis_result['cve_numbers'];
@@ -559,7 +561,7 @@ class submit
                             // landing
                             if ($fallout_analysis_result['type'] === 'landing') {
                                 $rule['name'] .= ' (Landing Page)';
-                                
+
                                 $host = $fallout_analysis_result['host'];
                                 $host_regexp = '/' . str_replace('.', '\\.', $host) . '/';
                                 $rules[] = ['type' => 'URI', 'name' => 'FalloutEK', 'regexp' => $host_regexp];
