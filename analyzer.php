@@ -230,7 +230,8 @@ class Analyzer
 
     public static function fallout_landing_decode(string $enc_str, string $base_str, string $key)
     {
-        return self::fallout_step3(self::fallout_step1($enc_str, $base_str), $key);
+        // return self::fallout_step3(self::fallout_step1($enc_str, $base_str), $key);
+        return self::fallout_step1($enc_str, $base_str);
     }
 
     public static function get_fallout_malware_info($enc_malware, string $enc_key, string $id): string
