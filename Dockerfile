@@ -1,13 +1,17 @@
-FROM php:7.2.8-fpm-alpine3.7
+FROM php:7.3.2-fpm-stretch
 LABEL maintainer "nao_sec <info@nao-sec.org>"
 
 ADD . /var/www/html
 
-RUN apk add --no-cache mono --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing && \
-    apk add --no-cache --virtual=.build-dependencies ca-certificates && \
-    apk add --no-cache libzip-dev && \
-    cert-sync /etc/ssl/certs/ca-certificates.crt && \
-    apk del .build-dependencies && \
+RUN apt update -y && \
+    apt upgrade -y && \
+    apt install -y apt-transport-https dirmngr zlib1g-dev libzip-dev && \
+    apt-key adv --no-tty --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
+    echo "deb https://download.mono-project.com/repo/debian stable-stretch main" | tee /etc/apt/sources.list.d/mono-official-stable.list && \
+    apt update -y && \
+    apt install -y mono-devel && \
+    apt clean -y && \
+    rm -rf /var/lib/apt/lists/* && \
     docker-php-ext-install zip && \
     chown www-data:www-data -R /var/www/html && \
     rm -rf /var/www/html/{logs,uploads,swf,malware}/* /var/www/html/api/result/* && \
