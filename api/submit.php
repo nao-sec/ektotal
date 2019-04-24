@@ -182,9 +182,9 @@ class submit
                             $pre_data_size = strlen($body);
                         }
 
-                        $body = gzdecode(implode('', $original_data));
+                        $body = file_get_contents('compress.zlib://data://text/plain;base64,' . base64_encode(implode('', $original_data)));
                     } else {
-                        $body = gzdecode($body);
+                        $body = file_get_contents('compress.zlib://data://text/plain;base64,' . base64_encode($body));
                         // if (isset($response['header']['Content-Length'])) {
                         //     $body_size = $response['header']['Content-Length'];
                         //     if (strlen($body) === $body_size) {
