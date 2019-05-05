@@ -1,6 +1,6 @@
 <template>
     <div class="term">
-        <div class="toast">
+        <div class="term-toast">
             <h1>About</h1>
             <h2>EKTotal</h2>
             <p>EKTotal is an integrated analysis tool that can automatically analyze the traffic of Drive-by Download attacks. The proposed software package can identify four types of Exploit Kits such as RIG and Magnitude, and more than ten types of attack campaigns such as Seamless and Fobos. EKTotal can also extract exploit codes and malware. The proposed heuristic analysis engine is based on Exploit Kit tracking research conducted since 2017, and is known as team "nao_sec". EKTotal provides a user-friendly web interface and powerful automated analysis functions. Thus, EKTotal can assist SOC operators and CSIRT members and researchers.</p>
@@ -25,7 +25,7 @@ body-color = gray
     height 100vh
     min-height 400px
     
-    .toast
+    .term-toast
         display block
         background-color rgba(255, 255, 255, 0.4)
         width 600px
