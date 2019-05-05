@@ -6,8 +6,8 @@
             <b-collapse is-nav id="nav_collapse" class="menu-body">
 
                 <b-navbar-nav>
-                <b-nav-item :to="{ name:'analyze-id', params:{ id: $store.state.analyze.scoped_analyze_result.id + '.json' } }" class="link-item" :class="{ 'now-viewing': viewing('analyze-id')}"><font-awesome-icon icon="tachometer-alt" /> Summary</b-nav-item>
-                <b-nav-item :to="{ name:'analyze-id-file', params:{ id: $store.state.analyze.scoped_analyze_result.id + '.json' } }" class="link-item" :class="{ 'now-viewing': viewing('analyze-id-file')}"><font-awesome-icon icon="file" /> File</b-nav-item>
+                <b-nav-item :to="{ name:'results-id', params:{ id: $store.state.analyze.scoped_analyze_result.id } }" class="link-item" :class="{ 'now-viewing': viewing('results-id')}"><font-awesome-icon icon="tachometer-alt" /> Summary</b-nav-item>
+                <b-nav-item :to="{ name:'results-id-file', params:{ id: $store.state.analyze.scoped_analyze_result.id } }" class="link-item" :class="{ 'now-viewing': viewing('results-id-file')}"><font-awesome-icon icon="file" /> File</b-nav-item>
                 </b-navbar-nav>
 
                 <b-navbar-nav class="ml-auto">
@@ -29,10 +29,10 @@
 
 export default {
     validate({ params }){
-        return /[a-f0-9\-]+_[a-f0-9\-]+\.json/.test(params.id);
+        return /[a-f0-9\-]+_[a-f0-9\-]+/.test(params.id);
     },
     async fetch({ store, params }){
-        let d = await store.$axios.$get('/api/result/' + params.id).catch(e => {
+        let d = await store.$axios.$get('/api/result/' + params.id + ".json").catch(e => {
                 let err =  new Error("Parameter id not found");
                 err.status_code = 404;
                 throw err;
