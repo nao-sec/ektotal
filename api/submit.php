@@ -679,7 +679,10 @@ class submit
             $rules_array = explode("\r\n", $rules_str);
             foreach ($rules_array as $rule) {
                 if (strlen($rule) > 1 && $rule[0] !== '#') {
+                    $rule = str_replace("</head>","<\/head>", $rule);
                     $rule = explode("\t", $rule);
+                    // ignore Phone numbers: [Extract-Phone] TAB [PhoneRegex] on EKFiddle rule
+                    if( count($rule) < 3) { continue; }
                     $rules[] = [
                         'type' => $rule[0],
                         'name' => $rule[1],
