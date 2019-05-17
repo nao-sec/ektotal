@@ -86,6 +86,11 @@ class Analyzer
         if (strlen($html) === 0) {
             return ['host' => '', 'enc_key' => null, 'cve_numbers' => []];
         }
+        
+        // [WIP] Fix Fallout Analyzer
+        if (strpos($html, "getElementById('") === false) {
+            return ['host' => '', 'enc_key' => null, 'cve_numbers' => []];
+        }
 
         $enc_element = explode("getElementById('", $html)[1];
         $enc_element = explode("'", $enc_element)[0];
