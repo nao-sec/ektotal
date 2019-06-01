@@ -364,7 +364,7 @@ class submit
 
             $url = $traffics[$i]['request']['URL'];
             $response_body = $traffics[$i]['response']['body'];
-            $content_type = isset($traffics[$i]['response']['header']['Content-Type']) ? $traffics[$i]['response']['header']['Content-Type'] : null;
+            $content_type = isset($traffics[$i]['response']['header']['Content-Type']) ? $traffics[$i]['response']['header']['Content-Type'] : '';
             $location_header = isset($traffics[$i]['response']['header']['Location']) ? $traffics[$i]['response']['header']['Location'] : null;
             $user_agent = isset($traffics[$i]['request']['User-Agent']) ? $traffics[$i]['request']['User-Agent'] : null;
 
