@@ -898,7 +898,7 @@ class submit
                     $json['data'][$i]['result']['name'] .= " (Estimated Gate)";
                 } else {
                     $json['data'][$i]['is_malicious'] = true;
-                    $json['data'][$i]['result']['name'] = "(Estimated Gate)";
+                    $json['data'][$i]['result']['name'] = "Estimated Gate";
                     $json['data'][$i]['result']['url'] = $gate;
                     $json['data'][$i]['result']['description'] = null;
                 }
