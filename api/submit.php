@@ -259,6 +259,10 @@ class submit
             'updated_at' => $date,
         ];
         $json['data'] = $analysis_result;
+
+        // estimate Gate
+        $json = self::estimate_gate($json);
+
         file_put_contents($json_path, json_encode($json));
 
         // response data
@@ -679,10 +683,10 @@ class submit
             $rules_array = explode("\r\n", $rules_str);
             foreach ($rules_array as $rule) {
                 if (strlen($rule) > 1 && $rule[0] !== '#') {
-                    $rule = str_replace("</head>","<\/head>", $rule);
+                    $rule = str_replace("</head>", "<\/head>", $rule);
                     $rule = explode("\t", $rule);
                     // ignore Phone numbers: [Extract-Phone] TAB [PhoneRegex] on EKFiddle rule
-                    if( count($rule) < 3) { continue; }
+                    if (count($rule) < 3) {continue;}
                     $rules[] = [
                         'type' => $rule[0],
                         'name' => $rule[1],
@@ -766,5 +770,141 @@ class submit
     private static function set_http_response_header(int $code)
     {
         $GLOBALS['global']['http_response_code'] = $code;
+    }
+
+    private static function estimate_gate($json): array
+    {
+        if (!is_array($json)) {
+            return $json;
+        }
+
+        $traffic = [];
+
+        foreach ($json['data'] as $d) {
+            if (!isset($d['response']['header'])) {
+                continue;
+            }
+
+            if (strpos($d['URL'], 'favicon.ico') !== false
+                || strpos($d['URL'], '.woff') !== false
+                || strpos($d['URL'], '.eot') !== false
+                || strpos($d['URL'], '.min.js') !== false
+                || strpos($d['URL'], 'www.google-analytics.com') !== false
+                || strpos($d['URL'], 'windowsupdate.com') !== false
+                || strpos($d['URL'], 'cloudfront.net') !== false
+                || strpos($d['URL'], 'doubleclick.net') !== false
+                || strpos($d['URL'], '.ttf') !== false
+                || strpos($d['URL'], 'nextoptim.com') !== false
+                || strpos($d['URL'], 'partofmediax.com') !== false
+                || strpos($d['URL'], 'youtube.com') !== false
+                || strpos($d['URL'], 'popcash') !== false
+                || strpos($d['URL'], 'google.com') !== false
+                || strpos($d['URL'], 'commank.pro') !== false
+                || strpos($d['URL'], 'fiddler2.com') !== false
+                || strpos($d['URL'], 'mybestmv.com') !== false
+                || strpos($d['URL'], 'mybetterdl.com') !== false
+                || strpos($d['URL'], 'mybestdl.com') !== false
+                || strpos($d['URL'], 'microsoft.com') !== false
+                || strpos($d['URL'], 'devdojo.com') !== false
+                || strpos($d['URL'], 'urlto.xyz') !== false
+                || strpos($d['URL'], 'trafficfree.eu') !== false
+                || strpos($d['URL'], '.css') !== false
+                || strpos($d['URL'], 'dollpremium.com') !== false) {
+                continue;
+            }
+
+            $fmt_header = [];
+            foreach ($d['response']['header'] as $header) {
+                $fmt_header[$header['key']] = $header['value'];
+            }
+            $d['response']['header'] = $fmt_header;
+
+            if (isset($d['response']['Status']) && ($d['response']['Status'][0] === '4' || $d['response']['Status'][0] === '5')) {
+                continue;
+            }
+
+            if (isset($d['response']['Status']) && $d['response']['Status'][0] === '3') {
+                $traffic[] = $d;
+                continue;
+            }
+
+            if (isset($d['response']['header']['Content-Type']) && strpos(strtolower($d['response']['header']['Content-Type']), 'text/html') !== false) {
+                $traffic[] = $d;
+            }
+        }
+
+        $is_ek_traffic = false;
+        $ek_entry_point = null;
+        for ($i = 0; $i < count($traffic); $i++) {
+            $t = $traffic[$i];
+            if ($t['is_malicious']
+                && isset($t['result']['name'])
+                && strpos($t['result']['name'], 'Redirection') === false
+                && (strpos($t['result']['name'], 'EK') !== false || strpos($t['result']['name'], 'Exploit Kit') !== false)) {
+                $is_ek_traffic = true;
+                $ek_entry_point = $i;
+                break;
+            }
+        }
+
+        if (!$is_ek_traffic) {
+            return $json;
+        }
+
+        $chain = [];
+        $chain[] = $traffic[$ek_entry_point];
+
+        for ($i = $ek_entry_point; $i >= 0; $i--) {
+            $url = $traffic[$i]['URL'];
+            $hostname = parse_url($traffic[$i]['URL'], PHP_URL_HOST);
+
+            $ip_regexp = "/^(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/";
+            if (preg_match($ip_regexp, $hostname)) {
+                $ip = $hostname;
+                $hostname = null;
+            } else {
+                $ip = gethostbyname($hostname);
+                if ($ip === $hostname || $ip === null || $ip === false) {
+                    $ip = null;
+                }
+            }
+
+            $is_found_upper = false;
+            for ($j = $i - 1; $j >= 0; $j--) {
+                if (isset($traffic[$j]['response']['header']['Location'])) {
+                    if ($traffic[$j]['response']['header']['Location'] === $url) {
+                        $chain[] = $traffic[$j];
+                        $is_found_upper = true;
+                        $i = $j;
+                        break;
+                    }
+                }
+            }
+
+            if (!$is_found_upper && $i > 0) {
+                $chain[] = $traffic[$i - 1];
+            }
+        }
+
+        $gate = null;
+        if (count($chain) <= 1) {
+            return $json;
+        }
+
+        $gate = $chain[1]['URL'];
+        for ($i = 0; $i < count($json['data']); $i++) {
+            if ($json['data'][$i]['URL'] === $gate) {
+                if (isset($json['data'][$i]['result']['name'])) {
+                    $json['data'][$i]['result']['name'] .= " (Estimated Gate)";
+                } else {
+                    $json['data'][$i]['is_malicious'] = true;
+                    $json['data'][$i]['result']['name'] = "(Estimated Gate)";
+                    $json['data'][$i]['result']['url'] = $gate;
+                    $json['data'][$i]['result']['description'] = null;
+                }
+            }
+        }
+
+        return $json;
     }
 }
