@@ -687,6 +687,7 @@ class submit
                     $rule = explode("\t", $rule);
                     // ignore Phone numbers: [Extract-Phone] TAB [PhoneRegex] on EKFiddle rule
                     if (count($rule) < 3) {continue;}
+                    if ($rule[2] === "\t") {continue;}
                     $rules[] = [
                         'type' => $rule[0],
                         'name' => $rule[1],
