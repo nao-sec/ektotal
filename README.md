@@ -8,6 +8,8 @@
   - Automatically analyzes 4 types of exploit kits, de-obfuscates the exploit codes, and decrypts the malware
 - User-friendly Web-UI
   - You can know the result at a glance
+- Lazy Gate Estimation
+  - Estimate where the redirect was from EK. This feature makes it very easy to reproduce traffic
 
 ## Requirements
 - PHP 7
@@ -83,6 +85,9 @@ Just submit pcap or saz file
 
 ## Change Log
 - 2018/05/04 - 1.0.0 - First Release
+- 2018/09/30 - 1.1.0 - Bugfix (gzdecode)
+- 2018/10/09 - 1.2.0 - Add Fallout analyzer
+- 2019/07/01 - 2.0.0 - Add Lazy Gate Estimation
 
 ## TODO
 - Add function to resolve domain name
