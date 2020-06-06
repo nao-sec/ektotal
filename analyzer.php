@@ -265,12 +265,6 @@ class Analyzer
             return ['enc_key' => null, 'cve_numbers' => []];
         }
 
-        if (strpos($html, 'var s = ') !== false) {
-            //
-        } else {
-            return ['enc_key' => null, 'cve_numbers' => []];
-        }
-
         $html = substr($html, strpos($html, '<script>'));
 
         $html = str_replace('<script>', "\n", $html);
