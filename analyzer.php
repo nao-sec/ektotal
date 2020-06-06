@@ -86,7 +86,7 @@ class Analyzer
         if (strlen($html) === 0) {
             return ['host' => '', 'enc_key' => null, 'cve_numbers' => []];
         }
-        
+
         // [WIP] Fix Fallout Analyzer
         if (strpos($html, "getElementById('") === false) {
             return ['host' => '', 'enc_key' => null, 'cve_numbers' => []];
@@ -271,8 +271,93 @@ class Analyzer
             return ['enc_key' => null, 'cve_numbers' => []];
         }
 
-        $code = explode('<script>', $html);
-        unset($code[0]);
+        $html = substr($html, strpos($html, '<script>'));
+
+        $html = str_replace('<script>', "\n", $html);
+        $html = str_replace('</script>', "\n", $html);
+        $full_html = explode("\n", $html);
+        $html = [];
+
+        for ($i = 0; $i < count($full_html); $i++) {
+            if (strlen($full_html[$i]) > 100) {
+                $tmp = $full_html[$i];
+                $tmp = str_replace('</head>', '', $tmp);
+                $tmp = str_replace('<body>', '', $tmp);
+                $tmp = str_replace('<script>', '', $tmp);
+                $tmp = str_replace('</script>', '', $tmp);
+                $tmp = str_replace('<hl>', '', $tmp);
+                $tmp = str_replace('</hl>', '', $tmp);
+                $tmp = str_replace('</body>', '', $tmp);
+                $tmp = str_replace('</html>', '', $tmp);
+                $tmp = trim($tmp);
+                if (strlen($tmp) > 100) {
+                    $html[] = $tmp;
+                }
+            }
+        }
+
+        $block_count = count($html) / 3;
+
+        $js = [];
+        for ($i = 0; $i < $block_count; $i++) {
+            for ($j = 0; $j < 2; $j++) {
+                $js[$i][$j] = substr(trim($html[$i * 3 + $j]), 12);
+                preg_match_all('/\/\*[0-9a-zA-Z]{1,32}\*\//', $js[$i][$j], $matches);
+                if (count($matches) > 0) {
+                    $matches = $matches[0];
+                    if (count($matches) > 0) {
+                        for ($k = 0; $k < count($matches); $k++) {
+                            $js[$i][$j] = str_replace($matches[$k], '', $js[$i][$j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        $split = [];
+        for ($i = 0; $i < $block_count; $i++) {
+            for ($j = 0; $j < 2; $j++) {
+                $split[$i][$j] = substr($js[$i][$j], -4, 1);
+            }
+        }
+
+        for ($i = 0; $i < $block_count; $i++) {
+            for ($j = 0; $j < 2; $j++) {
+                $js[$i][$j] = substr($js[$i][$j], 0, -22);
+            }
+        }
+
+        $code = [];
+        for ($i = 0; $i < count($js); $i++) {
+            $str[0] = explode($split[$i][0], $js[$i][0]);
+            $str[1] = explode($split[$i][1], $js[$i][1]);
+
+            $code[$i] = '';
+
+            for ($j = 0; $j < count($str[0]); $j++) {
+                $code[$i] .= $str[1][$j];
+                $code[$i] .= $str[0][count($str[0]) - $j - 1];
+            }
+
+            $pattern =
+                [
+                0x01 => '.',
+                0x02 => '<',
+                0x03 => '>',
+                0x04 => '=',
+                0x05 => '"',
+                0x06 => "'",
+                0x07 => ')',
+                0x08 => '(',
+                0x0f => ' ',
+                0x10 => "\t",
+                0x11 => "\n",
+            ];
+            foreach ($pattern as $key => $value) {
+                $code[$i] = str_replace(chr($key), $value, $code[$i]);
+            }
+        }
+
         $code = array_values($code);
 
         for ($i = 0; $i < count($code); $i++) {
