@@ -1,0 +1,8 @@
+api/result/*.json
+logs/*
+malware/*
+swf/*
+uploads/*
+rules/*
+bin/*
+
