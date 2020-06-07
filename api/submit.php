@@ -820,6 +820,11 @@ class submit
             }
             $d['response']['header'] = $fmt_header;
 
+            if (isset($d['is_malicious']) && $d['is_malicious']) {
+                $traffic[] = $d;
+                continue;
+            }
+
             if (isset($d['response']['Status']) && ($d['response']['Status'][0] === '4' || $d['response']['Status'][0] === '5')) {
                 continue;
             }
@@ -836,6 +841,7 @@ class submit
 
         $is_ek_traffic = false;
         $ek_entry_point = null;
+        $ek_host = null;
         for ($i = 0; $i < count($traffic); $i++) {
             $t = $traffic[$i];
             if ($t['is_malicious']
@@ -844,6 +850,7 @@ class submit
                 && (strpos($t['result']['name'], 'EK') !== false || strpos($t['result']['name'], 'Exploit Kit') !== false)) {
                 $is_ek_traffic = true;
                 $ek_entry_point = $i;
+                $ek_host = parse_url($t['URL'], PHP_URL_HOST);
                 break;
             }
         }
@@ -892,7 +899,15 @@ class submit
             return $json;
         }
 
-        $gate = $chain[1]['URL'];
+        $_chain = [];
+        foreach ($chain as $t) {
+            $hostname = parse_url($t['URL'], PHP_URL_HOST);
+            if ($ek_host != $hostname) {
+                $_chain[] = $t;
+            }
+        }
+        $gate = current($_chain);
+        $gate = $gate['URL'];
         for ($i = 0; $i < count($json['data']); $i++) {
             if ($json['data'][$i]['URL'] === $gate) {
                 if (isset($json['data'][$i]['result']['name'])) {
