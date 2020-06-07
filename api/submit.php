@@ -906,6 +906,11 @@ class submit
                 $_chain[] = $t;
             }
         }
+
+        if (count($_chain) < 1) {
+            return $json;
+        }
+
         $gate = current($_chain);
         $gate = $gate['URL'];
         for ($i = 0; $i < count($json['data']); $i++) {
