@@ -1,7 +1,7 @@
 import pkg from './package'
 
 export default {
-  mode: 'spa',
+  ssr: false,
 
   /*
   ** Headers of the page
