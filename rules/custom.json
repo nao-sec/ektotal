@@ -23,5 +23,35 @@
         "type": "SourceCode",
         "name": "Underminer EK",
         "regexp": "\/<\\\/iframe><section>[\\s\\S]*Adpop\/"
+    },
+    {
+        "type": "URI",
+        "name": "adpop Campaign",
+        "regexp": "\/^https:\\\/\\\/adpop.xyz\\\/([\\w]+)$\/"
+    },
+    {
+        "type": "URI",
+        "name": "Bottle EK",
+        "regexp": "\/priv.inteleksys\\.com\/"
+    },
+    {
+        "type": "URI",
+        "name": "Bottle EK (Exploit Code Request)",
+        "regexp": "\/conn\\.php\\?callback=\\?&data1=\/"
+    },
+    {
+        "type": "URI",
+        "name": "Bottle EK (Malware)",
+        "regexp": "\/conn\\.php\\?ge=\/"
+    },
+    {   
+        "type": "URI",
+        "name": "Estimated Gate - Fallout EK",
+        "regexp": "\/^http:\\\/\\\/easy-web-weight-loss\\.com\\\/([\\w]+)$\/"
+    },
+    {
+        "type": "URI",
+        "name": "PseudoGate (EK Redirection)",
+        "regexp": "\/tom\\.php$\/"
     }
 ]
