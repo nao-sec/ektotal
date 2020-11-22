@@ -56,22 +56,22 @@
     },
     {
         "type": "URI",
-        "name": "PurpleFox Exploit Kit",
+        "name": "PurpleFox EK",
         "regexp": "\/rawcdn\\.githack\\.cyou\\\/up\\.php\\?key=[1-9]$\/"
     },
     {
         "type": "URI",
-        "name": "PurpleFox Exploit Kit",
+        "name": "PurpleFox EK (Malware)",
         "regexp": "\/rawcdn\\.githack\\.cyou\\\/M0011\\.cab$\/"
     },
     {
         "type": "URI",
-        "name": "PurpleFox Exploit Kit",
+        "name": "PurpleFox EK (Landing Page)",
         "regexp": "\/\\?key=[0-9A-Z]{16}$\/"
     },
     {
         "type": "URI",
-        "name": "Redirector (PurpleFox Exploit Kit)",
+        "name": "Redirection PurpleFox EK",
         "regexp": "\/^https:\\\/\\\/www\\.nationalbiminitops\\.shop\\\/$\/"
     }
 ]
