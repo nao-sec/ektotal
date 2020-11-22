@@ -1,17 +1,17 @@
 [
     {
         "type": "URI",
-        "name": "GrandSoft Exploit Kit",
+        "name": "GrandSoft EK",
         "regexp": "\/^http(s|):\\\/\\\/.+.[xyz|tk]\\\/getversionpd\\\/.+\\\/.+\\\/.+\\\/.+(\\\/|)$\/"
     },
     {
         "type": "URI",
-        "name": "GrandSoft Exploit Kit",
+        "name": "GrandSoft EK",
         "regexp": "\/^http(s|):\\\/\\\/.+.[xyz|tk]\\\/[0-9]{1}\\\/[0-9]{4}(\\\/|)$\/"
     },
     {
         "type": "Location",
-        "name": "Redirection RIG Exploit Kit",
+        "name": "Redirection RIG EK",
         "regexp": "\/\\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}\/"
     },
     {
@@ -71,7 +71,7 @@
     },
     {
         "type": "URI",
-        "name": "Redirection PurpleFox EK",
+        "name": "Estimated Gate - PurpleFox EK",
         "regexp": "\/^https:\\\/\\\/www\\.nationalbiminitops\\.shop\\\/$\/"
     }
 ]
