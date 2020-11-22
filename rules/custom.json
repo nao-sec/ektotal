@@ -71,7 +71,7 @@
     },
     {
         "type": "URI",
-        "name": "Estimated Gate - PurpleFox EK",
+        "name": "Redirection PurpleFox EK",
         "regexp": "\/^https:\\\/\\\/www\\.nationalbiminitops\\.shop\\\/$\/"
     }
 ]
