@@ -47,11 +47,31 @@
     {   
         "type": "URI",
         "name": "Estimated Gate - Fallout EK",
-        "regexp": "\/^http:\\\/\\\/easy-web-weight-loss\\.com\\\/([\\w]+)$\/"
+        "regexp": "\/^http:\\\/\\\/easy-web-weight-loss.com\\\/([\\w]+)$\/"
     },
     {
         "type": "URI",
         "name": "PseudoGate (EK Redirection)",
         "regexp": "\/tom\\.php$\/"
+    },
+    {
+        "type": "URI",
+        "name": "PurpleFox Exploit Kit",
+        "regexp": "\/rawcdn\\.githack\\.cyou\\\/up\\.php\\?key=[1-9]$\/"
+    },
+    {
+        "type": "URI",
+        "name": "PurpleFox Exploit Kit",
+        "regexp": "\/rawcdn\\.githack\\.cyou\\\/M0011\\.cab$\/"
+    },
+    {
+        "type": "URI",
+        "name": "PurpleFox Exploit Kit",
+        "regexp": "\/\\?key=[0-9A-Z]{16}$\/"
+    },
+    {
+        "type": "URI",
+        "name": "Redirector (PurpleFox Exploit Kit)",
+        "regexp": "\/^https:\\\/\\\/www\\.nationalbiminitops\\.shop\\\/$\/"
     }
 ]
