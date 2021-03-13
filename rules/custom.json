@@ -1,3 +1,4 @@
+
 [
     {
         "type": "URI",
@@ -73,5 +74,10 @@
         "type": "URI",
         "name": "Redirection PurpleFox EK",
         "regexp": "\/^https:\\\/\\\/www\\.nationalbiminitops\\.shop\\\/$\/"
+    },
+    {
+        "type": "URI",
+        "name": "Dropbox Link",
+        "regexp": "\/href=\"https:\\\/\\\/www.dropbox.com\\\/s\\\/\/"
     }
 ]
