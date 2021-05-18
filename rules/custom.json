@@ -44,6 +44,11 @@
         "name": "Bottle EK (Malware)",
         "regexp": "\/conn\\.php\\?ge=\/"
     },
+    {
+        "type": "URI",
+        "name": "Bottle EK (Malware)",
+        "regexp": "\/&data1=\/"
+    },
     {   
         "type": "URI",
         "name": "Estimated Gate - Fallout EK",
