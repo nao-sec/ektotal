@@ -46,7 +46,7 @@
     },
     {
         "type": "URI",
-        "name": "Bottle EK (Malware)",
+        "name": "Bottle EK",
         "regexp": "\/&data3=\/"
     },
     {   
