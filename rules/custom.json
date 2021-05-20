@@ -42,7 +42,7 @@
     {
         "type": "URI",
         "name": "Bottle EK (Malware)",
-        "regexp": "\/conn\\.php\\?ge=\/"
+        "regexp": "\/\\.php\\?covinhed=\/"
     },
     {
         "type": "URI",
