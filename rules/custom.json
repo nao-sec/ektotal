@@ -37,7 +37,7 @@
     {
         "type": "URI",
         "name": "Bottle EK (Exploit Code Request)",
-        "regexp": "\/\\.php\\?callback=\\?&data1=\/"
+        "regexp": "\/\\.php\\?callback=jQuery\/"
     },
     {
         "type": "URI",
