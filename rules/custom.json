@@ -47,7 +47,7 @@
     {
         "type": "URI",
         "name": "Bottle EK (Exploit Code Request)",
-        "regexp": "\/data3=\/"
+        "regexp": "\/&data3=\/"
     },
     {   
         "type": "URI",
