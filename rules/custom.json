@@ -37,7 +37,7 @@
     {
         "type": "URI",
         "name": "Bottle EK (Exploit Code Request)",
-        "regexp": "\/conn\\.php\\?callback=\\?&data1=\/"
+        "regexp": "\/\\.php\\?callback=\\?&data1=\/"
     },
     {
         "type": "URI",
@@ -46,8 +46,8 @@
     },
     {
         "type": "URI",
-        "name": "Bottle EK",
-        "regexp": "\/&data3=\/"
+        "name": "Bottle EK (Exploit Code Request)",
+        "regexp": "\/data3=\/"
     },
     {   
         "type": "URI",
