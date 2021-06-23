@@ -1,3 +1,4 @@
+
 [
     {
         "type": "URI",
@@ -61,13 +62,18 @@
     },
     {
         "type": "URI",
+        "name": "Dropbox Link",
+        "regexp": "\/href=\"https:\\\/\\\/www.dropbox.com\\\/s\\\/\/"
+    },
+    {
+        "type": "URI",
         "name": "PurpleFox EK",
-        "regexp": "\/rawcdn\\.githack\\.cyou\\\/up\\.php\\?key=[1-9]$\/"
+        "regexp": "\/\\\/up\\.php\\?key=[1-9]$\/"
     },
     {
         "type": "URI",
         "name": "PurpleFox EK (Malware)",
-        "regexp": "\/rawcdn\\.githack\\.cyou\\\/M0011\\.cab$\/"
+        "regexp": "\/\\\/M0011\\.cab$\/"
     },
     {
         "type": "URI",
@@ -76,12 +82,17 @@
     },
     {
         "type": "URI",
-        "name": "Redirection PurpleFox EK",
-        "regexp": "\/^https:\\\/\\\/www\\.nationalbiminitops\\.shop\\\/$\/"
+        "name": "PurpleFox EK",
+        "regexp": "\/\\\/dl\\.php\\?id=[1-9]{1,2}$\/"
     },
     {
         "type": "URI",
-        "name": "Dropbox Link",
-        "regexp": "\/href=\"https:\\\/\\\/www.dropbox.com\\\/s\\\/\/"
+        "name": "PurpleFox EK",
+        "regexp": "\/\\\/M0031\\.cab$\/"
+    },
+    {
+        "type": "URI",
+        "name": "PurpleFox EK",
+        "regexp": "\/^http:\\\/\\\/6kf\\.me\/"
     }
 ]
