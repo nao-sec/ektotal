@@ -68,31 +68,21 @@
     {
         "type": "URI",
         "name": "PurpleFox EK",
-        "regexp": "\/\\\/up\\.php\\?key=[1-9]$\/"
-    },
-    {
-        "type": "URI",
-        "name": "PurpleFox EK (Malware)",
-        "regexp": "\/\\\/M0011\\.cab$\/"
-    },
-    {
-        "type": "URI",
-        "name": "PurpleFox EK (Landing Page)",
-        "regexp": "\/\\?key=[0-9A-Z]{16}$\/"
+        "regexp": "\/\\\/[A-Z]{1}[0-9]{4}\\.cab$\/"
     },
     {
         "type": "URI",
         "name": "PurpleFox EK",
-        "regexp": "\/\\\/dl\\.php\\?id=[1-9]{1,2}$\/"
+        "regexp": "\/\\\/d.php\\?i=[0-9]{1,2}$\/"
     },
     {
-        "type": "URI",
+        "type": "SourceCode",
         "name": "PurpleFox EK",
-        "regexp": "\/\\\/M0031\\.cab$\/"
+        "regexp": "\/VBScript\\.Encode\/"
     },
     {
-        "type": "URI",
+        "type": "SourceCode",
         "name": "PurpleFox EK",
-        "regexp": "\/^http:\\\/\\\/6kf\\.me\/"
+        "regexp": "\/https:\\\/\\\/tootirrruahapowsadassa\\.com\/"
     }
 ]
