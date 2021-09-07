@@ -84,5 +84,40 @@
         "type": "SourceCode",
         "name": "PurpleFox EK",
         "regexp": "\/https:\\\/\\\/tootirrruahapowsadassa\\.com\/"
+    },
+    {
+        "type": "URI",
+        "name": "Undermier EK (Type-1)",
+        "regexp": "\/\\\/[0-9a-f\\\/]{33}\\?u=[0-9a-zA-Z~\\|]{116}$\/"
+    },
+    {
+        "type": "URI",
+        "name": "Undermier EK (Type-2)",
+        "regexp": "\/\\\/[0-9a-f]{12}\\\/[0-9a-zA-Z]{15}\\.js$\/"
+    },
+    {
+        "type": "URI",
+        "name": "Undermier EK (Type-3)",
+        "regexp": "\/\\\/[0-9a-f]{12}\\\/[0-9a-zA-Z]{15}\\.swf$\/"
+    },
+    {
+        "type": "URI",
+        "name": "Undermier EK (Type-4)",
+        "regexp": "\/\\\/[0-9a-f]{12}\\\/[0-9a-zA-Z]{15}\\.html$\/"
+    },
+    {
+        "type": "URI",
+        "name": "Undermier EK (Type-5)",
+        "regexp": "\/\\\/[0-9a-zA-Z]{10}\\.png\\?id=[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$\/"
+    },
+    {
+        "type": "URI",
+        "name": "Undermier EK (Type-6)",
+        "regexp": "\/\\\/api\\\/v1\\\/message\\\/exec\\?id=[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}&tid=[0-9]{5}$\/"
+    },
+    {
+        "type": "URI",
+        "name": "Undermier EK (Type-7)",
+        "regexp": "\/\\\/api\\\/v1\\\/message\\\/close\\?id=[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}&t=[0-9]{13}$\/"
     }
 ]
